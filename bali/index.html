@@ -333,17 +333,25 @@
   }
 
   function copyAddress() {
-    const address = 'Saujana Film Lab Bali';
-    navigator.clipboard.writeText(address).then(() => {
+  const address = 'Saujana Film Lab Bali';
+
+  navigator.clipboard.writeText(address)
+    .then(() => {
       const label = document.getElementById('copy-addr-label');
+
       label.textContent = 'Copied ✓';
       label.style.color = '#c8922a';
+
       setTimeout(() => {
         label.textContent = 'Address';
         label.style.color = '#c8c8c8';
       }, 2000);
+    })
+    .catch(err => {
+      console.error('Clipboard failed:', err);
+      alert('Copy failed: ' + err.message);
     });
-  }
+}
 </script>
 
 </body>
