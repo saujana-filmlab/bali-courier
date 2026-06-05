@@ -335,22 +335,40 @@
   function copyAddress() {
   const address = 'Saujana Film Lab Bali';
 
-  navigator.clipboard.writeText(address)
-    .then(() => {
-      const label = document.getElementById('copy-addr-label');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(address)
+      .then(showCopied)
+      .catch(fallbackCopy);
+  } else {
+    fallbackCopy();
+  }
 
-      label.textContent = 'Copied ✓';
-      label.style.color = '#c8922a';
+  function fallbackCopy() {
+    const textarea = document.createElement('textarea');
+    textarea.value = address;
+    document.body.appendChild(textarea);
 
-      setTimeout(() => {
-        label.textContent = 'Address';
-        label.style.color = '#c8c8c8';
-      }, 2000);
-    })
-    .catch(err => {
-      console.error('Clipboard failed:', err);
-      alert('Copy failed: ' + err.message);
-    });
+    textarea.select();
+    document.execCommand('copy');
+
+    document.body.removeChild(textarea);
+
+    showCopied();
+  }
+
+  function showCopied() {
+    const label = document.getElementById('copy-addr-label');
+
+    if (!label) return;
+
+    label.textContent = 'Copied ✓';
+    label.style.color = '#c8922a';
+
+    setTimeout(() => {
+      label.textContent = 'Address';
+      label.style.color = '#c8c8c8';
+    }, 2000);
+  }
 }
 </script>
 
