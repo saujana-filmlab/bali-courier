@@ -3,20 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Send Your Film!</title>
-  <meta name="description" content="Fill this form before sending your film to us" />
-  <meta property="og:title" content="Send your film to Saujana Film Lab Bali" />
-  <meta property="og:description" content="Fill this form before sending your film to us." />
-  <meta property="og:image" content="https://bali-scans.saujanalab.com/saujanaicon.png" />
-  <meta property="og:url" content="https://sendyourfilm.saujanalab.com/bali" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <!-- Added ?v=2 to force the browser to clear its cache and load the icon -->
-  <link rel="icon" type="image/png" href="saujana-favicon.png?v=2" />
-  <link rel="apple-touch-icon" href="saujana-favicon.png?v=2" />
+  <title>Your Send your Film — Saujana Film Lab Bali</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
+<!-- WhatsApp / Social Media Preview Tags -->
+  <meta property="og:title" content="Send your Film to Saujana Film Lab Bali" />
+  <meta property="og:description" content="Fill the form below before sending your film." />
+  <meta property="og:image" content="https://bali-scans.saujanalab.com/saujanaicon.png" />
+  <meta property="og:url" content="https://bali-scans.saujanalab.com/" />
+  <meta property="og:type" content="website" />
 
+  <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -300,8 +296,8 @@
     const notes = document.getElementById('notes').value.trim();
 
     let msg = `Hi Saujana! I'd like to send my film via GoSend/Grab.`;
-    msg += `\n\n*Name:* ${name || '-'}`;
-    msg += `\n*Email:* ${email || '-'}`;
+    msg += `\n\n*Name:* ${name || '—'}`;
+    msg += `\n*Email:* ${email || '—'}`;
     if (notes) msg += `\n*Notes:* ${notes}`;
     msg += `\n\nPlease let me know once it arrives. Thank you!`;
     return msg;
@@ -317,7 +313,7 @@
     }
 
     const msg = buildMessage();
-    document.getElementById('preview-text').textContent = msg;
+    document.getElementById('preview-text').textContent = msg.replace(/\n/g, '\n');
     document.getElementById('preview').classList.add('show');
   }
 
@@ -331,13 +327,13 @@
     }
 
     const msg = buildMessage();
-    const encoded = encodeURIComponent(msg);
+    const encoded = encodeURIComponent(msg.replace(/\\n/g, '\n'));
     window.open(`https://wa.me/6282251318377?text=${encoded}`, '_blank');
     return false;
   }
 
   function copyAddress() {
-    const address = 'Saujana Film Lab Bali, Copy the address and paste it into the destination bar in GoSend or GrabExpress.';
+    const address = 'Saujana Film Lab Bali';
     navigator.clipboard.writeText(address).then(() => {
       const label = document.getElementById('copy-addr-label');
       label.textContent = 'Copied ✓';
